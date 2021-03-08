@@ -6,6 +6,11 @@ class Dispatcher(object):
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+        self.fieldnames = ['service', 'identifier', 'cname', 'ips']
+
+        with open('list.csv', 'w', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=self.fieldnames)
+            writer.writeheader()
 
     def dispatch(self, resources):
         self.logger.info(
@@ -13,9 +18,7 @@ class Dispatcher(object):
         )
 
         with open('list.csv', 'a+', newline='') as csvfile:
-            fieldnames = ['identifier', 'service', 'cname', 'ips']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
+            writer = csv.DictWriter(csvfile, fieldnames=self.fieldnames)
 
             for resource in resources:
 
