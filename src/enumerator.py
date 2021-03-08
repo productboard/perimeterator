@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-''' Perimeterator Enumerator.
+""" Perimeterator Enumerator.
 
 This wrapper is intended to allow for simplified AWS based deployment of the
 Perimeterator enumerator. This allows for a cost effective method of
 execution, as the Perimeterator poller component only needs to execute on a
 defined schedule in order to detect changes.
-'''
+"""
 
 import os
 import logging
@@ -22,7 +22,7 @@ MODULES = [
 
 
 def lambda_handler(event, context):
-    ''' An AWS Lambda wrapper for the Perimeterator enumerator. '''
+    """ An AWS Lambda wrapper for the Perimeterator enumerator. """
     # Strip off any existing handlers that may have been installed by AWS.
     logger = logging.getLogger()
     for handler in logger.handlers:
@@ -39,16 +39,10 @@ def lambda_handler(event, context):
     logger.info("Running in AWS account %s", account)
 
     # Get configurable options from environment variables.
-    regions = os.getenv("ENUMERATOR_REGIONS", "us-west-2").split(",")
-    sqs_queue = os.getenv("ENUMERATOR_SQS_QUEUE", None)
-    logger.info("Configured results SQS queue is %s", sqs_queue)
-    logger.info(
-        "Configured regions for resource enumeration are %s",
-        ", ".join(regions)
-    )
+    regions = os.getenv("ENUMERATOR_REGIONS", "us-east-1").split(",")
 
     # Setup the SQS dispatcher for submission of addresses to scanners.
-    queue = perimeterator.dispatcher.sqs.Dispatcher(queue=sqs_queue)
+    queue = perimeterator.dispatcher.csv.Dispatcher()
 
     # Process regions one at a time, enumerating addresses for all configured
     # resources in the given region. Currently, it's not possible to only
@@ -77,7 +71,7 @@ def lambda_handler(event, context):
                 module,
                 region
             )
-            queue.dispatch(account, hndl.get())
+            queue.dispatch(hndl.get())
 
 
 if __name__ == '__main__':

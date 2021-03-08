@@ -1,3 +1,1 @@
-''' Perimeterator - Enumerated address dispatchers. '''
-
-from perimeterator.dispatcher import sqs  # noqa: F401
+from perimeterator.dispatcher import csv  # noqa: F401

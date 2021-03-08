@@ -55,6 +55,7 @@ class Enumerator(object):
                 resources.append({
                     "service": self.SERVICE,
                     "identifier": domain["DomainStatus"]["ARN"],
+                    "cname": domain["DomainStatus"]["Endpoint"],
                     "addresses": dns_lookup(
                         domain["DomainStatus"]["Endpoint"]
                     ),

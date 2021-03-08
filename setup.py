@@ -23,7 +23,6 @@ setup(
     },
     scripts=[
         'src/enumerator.py',
-        'src/scanner.py',
     ],
     setup_requires=[
         'pytest-runner',

@@ -75,6 +75,7 @@ class Enumerator(object):
                     resources.append({
                         "service": self.SERVICE,
                         "identifier": elb["LoadBalancerArn"],
+                        "cname": elb["DNSName"],
                         "addresses": dns_lookup(elb["DNSName"]),
                     })
 

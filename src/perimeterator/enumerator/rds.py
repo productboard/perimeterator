@@ -63,6 +63,7 @@ class Enumerator(object):
                     resources.append({
                         "service": self.SERVICE,
                         "identifier": rds["DBInstanceArn"],
+                        "cname": rds["Endpoint"]["Address"],
                         "addresses": dns_lookup(rds["Endpoint"]["Address"]),
                     })
                 except KeyError:

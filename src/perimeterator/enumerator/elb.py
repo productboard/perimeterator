@@ -64,6 +64,7 @@ class Enumerator(object):
                         self.region,
                         elb["LoadBalancerName"]
                     ),
+                    "cname": elb["DNSName"],
                     "addresses": dns_lookup(elb["DNSName"]),
                 })
 

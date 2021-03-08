@@ -21,11 +21,7 @@ class Enumerator(object):
         resources = []
         filters = [
             {
-                "Name": "instance-state-name",
-                "Values": [
-                    "pending",
-                    "running",
-                ],
+                "state": "available",
             }
         ]
 
@@ -34,12 +30,12 @@ class Enumerator(object):
         next_token = ''
         while next_token is not None:
             if next_token:
-                candidates = self.client.describe_instances(
+                candidates = self.client.describe_nat_gateways(
                     Filters=filters,
                     NextToken=next_token
                 )
             else:
-                candidates = self.client.describe_instances(
+                candidates = self.client.describe_nat_gateways(
                     Filters=filters
                 )
 
